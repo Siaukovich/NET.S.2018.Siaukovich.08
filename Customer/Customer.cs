@@ -281,7 +281,11 @@
         /// The <see cref="bool"/>.
         /// True of number have more than two decimal places, false otherwise.
         /// </returns>
-        private static bool HaveMoreThanTwoDecimalPlaces(decimal value) => value != (100 * value);
+        private static bool HaveMoreThanTwoDecimalPlaces(decimal value)
+        {
+            decimal mustBeInt = value * 100;
+            return decimal.Floor(mustBeInt) != mustBeInt;
+        } 
 
         #endregion
     }
