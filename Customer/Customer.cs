@@ -43,11 +43,11 @@
         /// <param name="revenue">
         /// Customer's revenue.
         /// </param>
-        public Customer(string name, string contactPhone, string revenue)
+        public Customer(string name, string contactPhone, decimal revenue)
         {
             this.Name = name;
             this.ContactPhone = contactPhone;
-            this.Revenue = this.revenue;
+            this.Revenue = revenue;
         }
 
         #endregion
@@ -57,6 +57,9 @@
         /// <summary>
         /// Gets or sets current customer's name.
         /// </summary>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown if passed name is null.
+        /// </exception>
         /// <exception cref="ArgumentException">
         /// Thrown if passed name doesn't satisfy given rules:
         /// 1. Name can be only in Russian or English.
@@ -70,6 +73,11 @@
 
             set
             {
+                if (value == null)
+                {
+                    throw new ArgumentNullException(nameof(value));
+                }
+
                 const string PATTERN_ENG = @"^([A-Z][a-z]* )+[A-Z][a-z]*$";
                 var regex = new Regex(PATTERN_ENG);
                 if (regex.IsMatch(value))
@@ -94,8 +102,11 @@
         /// <summary>
         /// Gets or sets current customer's contact phone.
         /// </summary>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown if passed number is null.
+        /// </exception>
         /// <exception cref="ArgumentException">
-        /// Thrown if number not in form "+X (XXX) XXX-XXXX".
+        /// Thrown if passed number not in form "+X (XXX) XXX-XXXX".
         /// </exception>
         public string ContactPhone
         {
@@ -103,6 +114,11 @@
 
             set
             {
+                if (value == null)
+                {
+                    throw new ArgumentNullException(nameof(value));
+                }
+
                 var pattern = @"^\+\d \(\d{3}\) \d{3}-\d{4}";
                 var regex = new Regex(pattern);
                 if (!regex.IsMatch(value))
