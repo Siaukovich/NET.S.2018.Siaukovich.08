@@ -29,6 +29,29 @@
 
         #endregion
 
+        #region Constructor
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Customer"/> class.
+        /// </summary>
+        /// <param name="name">
+        /// Customer's name.
+        /// </param>
+        /// <param name="contactPhone">
+        /// Customer's contact phone.
+        /// </param>
+        /// <param name="revenue">
+        /// Customer's revenue.
+        /// </param>
+        public Customer(string name, string contactPhone, string revenue)
+        {
+            this.Name = name;
+            this.ContactPhone = contactPhone;
+            this.Revenue = this.revenue;
+        }
+
+        #endregion
+
         #region Propereties
 
         /// <summary>
