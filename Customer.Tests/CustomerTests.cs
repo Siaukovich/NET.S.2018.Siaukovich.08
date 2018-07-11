@@ -1,6 +1,7 @@
 ﻿namespace Customer.Tests
 {
     using System;
+    using System.Globalization;
 
     using NUnit.Framework;
 
@@ -10,6 +11,35 @@
     [TestFixture]
     public class CustomerTests
     {
+        #region ToString tests
+
+        [TestCase("G", ExpectedResult = "John Doe, +1 (425) 555-0100, 1000.52")]
+        [TestCase("NPR", ExpectedResult = "John Doe, +1 (425) 555-0100, 1000.52")]
+        [TestCase("NP", ExpectedResult = "John Doe, +1 (425) 555-0100")]
+        [TestCase("NR", ExpectedResult = "John Doe, 1000.52")]
+        [TestCase("RN", ExpectedResult = "1000.52, John Doe")]
+        [TestCase("PN", ExpectedResult = "+1 (425) 555-0100, John Doe")]
+        [TestCase("PR", ExpectedResult = "+1 (425) 555-0100, 1000.52")]
+        [TestCase("RP", ExpectedResult = "1000.52, +1 (425) 555-0100")]
+        public string CustomersToString_ValidInputInvariantCulture_ValidString(string format)
+        {
+            var c = new Customer("John Doe", "+1 (425) 555-0100", 1000.52m);
+            return c.ToString(format, CultureInfo.InvariantCulture);
+        }
+
+        [TestCase("G", ExpectedResult = "John Doe, +1 (425) 555-0100, 1000,52")]
+        [TestCase("NPR", ExpectedResult = "John Doe, +1 (425) 555-0100, 1000,52")]
+        [TestCase("RN", ExpectedResult = "1000,52, John Doe")]
+        public string CustomersToString_ValidInputRussianCulture_ValidString(string format)
+        {
+            var c = new Customer("John Doe", "+1 (425) 555-0100", 1000.52m);
+            return c.ToString(format, new CultureInfo("ru-ru"));
+        }
+
+        #endregion
+
+        #region Propereties tests
+
         [TestCase("jonh doe")]
         [TestCase("John")]
         [TestCase("John G123")]
@@ -63,5 +93,7 @@
         {
             new Customer("John Doe", "+1 (425) 555-0100", 1000);
         }
+
+        #endregion
     }
 }
