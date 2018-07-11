@@ -164,7 +164,7 @@
         /// </returns>
         public override string ToString()
         {
-            return this.ToString("G", CultureInfo.CurrentCulture);
+            return this.ToString("G", CultureInfo.InvariantCulture);
         }
 
         /// <summary>
