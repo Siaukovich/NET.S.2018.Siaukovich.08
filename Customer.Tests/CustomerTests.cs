@@ -44,6 +44,8 @@
         [TestCase("John")]
         [TestCase("John G123")]
         [TestCase("")]
+        [TestCase("Севкович 1")]
+        [TestCase("Севкович 1Кирилл1")]
         public void CustomersCtor_InvalidName_ThrowsArgumentException(string invalidName) =>
             Assert.Throws<ArgumentException>(() => new Customer(invalidName, "+1 (425) 555-0100", 1000));
 
@@ -54,6 +56,8 @@
         [TestCase("John Doe")]
         [TestCase("John Alex Doe")]
         [TestCase("John J K Doe")]
+        [TestCase("Севкович Кирилл")]
+        [TestCase("Севкович Кирилл Александрович")]
         public void CustomersCtor_ValidName_NoException(string validName)
         {
             new Customer(validName, "+1 (425) 555-0100", 1000);
