@@ -1,12 +1,14 @@
 ﻿namespace Customer
 {
     using System;
+    using System.Collections.Generic;
+    using System.Globalization;
     using System.Text.RegularExpressions;
 
     /// <summary>
     /// Class that describes a single customer by his name, contact phone and revenue.
     /// </summary>
-    public class Customer
+    public class Customer : IFormattable
     {
         #region Private fields
 
@@ -112,7 +114,123 @@
 
         #endregion
 
+        #region ToString
+
+        /// <summary>
+        /// Returns string representation of current customer in format "Name, phone, revenue".
+        /// </summary>
+        /// <returns>
+        /// The <see cref="string"/>.
+        /// Current customer string representation.
+        /// </returns>
+        public override string ToString()
+        {
+            return this.ToString("G", CultureInfo.CurrentCulture);
+        }
+
+        /// <summary>
+        /// Creates string representation of current customer 
+        /// that corresponds to passed format.
+        /// Class supports four format specifiers:
+        /// N - name.
+        /// P - contact phone.
+        /// R - revenue.
+        /// G - general.
+        /// Specifiers N, P and R may be combined in any order.
+        /// Format string can not contain duplicate specifiers.
+        /// G can not be combined with anything.
+        /// </summary>
+        /// <param name="format">
+        /// Format string.
+        /// </param>
+        /// <param name="formatProvider">
+        /// Format provider.
+        /// </param>
+        /// <returns>
+        /// The <see cref="string"/>.
+        /// String representation of current customer 
+        /// that corresponds to passed format string.
+        /// </returns>
+        /// <exception cref="FormatException">
+        /// Thrown if given format string doesn't fit format rules.
+        /// </exception>
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            CheckInput();
+
+            if (format == "G")
+            {
+                return string.Join(", ", this.Name, this.ContactPhone, this.Revenue);
+            }
+
+            var specifiers = new Dictionary<string, string>
+            {
+                { "N", this.Name },
+                { "P", this.ContactPhone },
+                { "R", this.Revenue.ToString(formatProvider) }
+            };
+
+            return BuildStringRepresentation(format, specifiers); 
+
+            void CheckInput()
+            {
+                if (string.IsNullOrEmpty(format))
+                {
+                    format = "G";
+                }
+
+                if (formatProvider == null)
+                {
+                    formatProvider = CultureInfo.CurrentCulture;
+                }
+            }
+        }
+
+        #endregion
+
         #region Helpers
+
+        /// <summary>
+        /// Builds current customer's string representation 
+        /// based on provided format string and specifiers mapping.
+        /// </summary>
+        /// <param name="format">
+        /// Format string.
+        /// </param>
+        /// <param name="specifiers">
+        /// Specifiers mapping "specifier -> string".
+        /// </param>
+        /// <returns>
+        /// The <see cref="string"/>.
+        /// String representation of current customer 
+        /// that corresponds to passed format string.
+        /// </returns>
+        /// <exception cref="FormatException">
+        /// Thrown if given format string doesn't fit format rules.
+        /// </exception>
+        private static string BuildStringRepresentation(string format, Dictionary<string, string> specifiers)
+        {
+            const string SEPARATOR = ", ";
+            var resultStr = string.Empty;
+            for (var index = 0; index < format.Length; index++)
+            {
+                var specifier = format[index].ToString();
+                if (!specifiers.ContainsKey(specifier))
+                {
+                    throw new FormatException($"The \"{format}\" format string is not supported.");
+                }
+
+                resultStr += specifiers[specifier];
+                specifiers.Remove(specifier);
+
+                if (index != format.Length - 1)
+                {
+                    resultStr += SEPARATOR;
+                }
+            }
+
+            return resultStr;
+        }
 
         /// <summary>
         /// Checks if passed decimal value have more than two decimal places.
