@@ -197,7 +197,7 @@
         {
             CheckInput();
 
-            if (format == "G")
+            if (format == "G" || format == "NPR")
             {
                 return string.Join(", ", this.Name, this.ContactPhone, this.Revenue.ToString(formatProvider));
             }
