@@ -199,7 +199,7 @@
 
             if (format == "G")
             {
-                return string.Join(", ", this.Name, this.ContactPhone, this.Revenue);
+                return string.Join(", ", this.Name, this.ContactPhone, this.Revenue.ToString(formatProvider));
             }
 
             var specifiers = new Dictionary<string, string>
