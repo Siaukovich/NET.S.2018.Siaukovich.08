@@ -36,6 +36,17 @@
             return c.ToString(format, new CultureInfo("ru-ru"));
         }
 
+        [Test]
+        public void CustomersRegularToString_ValidInput_ValidString()
+        {
+            var c = new Customer("John Doe", "+1 (425) 555-0100", 1000.52m);
+            string expected = "John Doe, +1 (425) 555-0100, 1000.52";
+
+            string actual = c.ToString();
+
+            Assert.AreEqual(actual, expected);
+        }
+
         #endregion
 
         #region Propereties tests
