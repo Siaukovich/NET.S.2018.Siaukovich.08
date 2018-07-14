@@ -197,9 +197,11 @@
         {
             CheckInput();
 
+            format = format.ToUpper();
+            const string SEPARATOR = ", ";
             if (format == "G" || format == "NPR")
             {
-                return string.Join(", ", this.Name, this.ContactPhone, this.Revenue.ToString(formatProvider));
+                return string.Join(SEPARATOR, this.Name, this.ContactPhone, this.Revenue.ToString(formatProvider));
             }
 
             var specifiers = new Dictionary<string, string>
@@ -209,7 +211,7 @@
                 { "R", this.Revenue.ToString(formatProvider) }
             };
 
-            return BuildStringRepresentation(format, specifiers); 
+            return BuildStringRepresentation(format, specifiers, SEPARATOR); 
 
             void CheckInput()
             {
@@ -247,9 +249,8 @@
         /// <exception cref="FormatException">
         /// Thrown if given format string doesn't fit format rules.
         /// </exception>
-        private static string BuildStringRepresentation(string format, Dictionary<string, string> specifiers)
+        private static string BuildStringRepresentation(string format, Dictionary<string, string> specifiers, string separator)
         {
-            const string SEPARATOR = ", ";
             var resultStr = string.Empty;
             for (var index = 0; index < format.Length; index++)
             {
@@ -264,7 +265,7 @@
 
                 if (index != format.Length - 1)
                 {
-                    resultStr += SEPARATOR;
+                    resultStr += separator;
                 }
             }
 
