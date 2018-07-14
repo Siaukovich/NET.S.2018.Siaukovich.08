@@ -14,12 +14,14 @@
         #region ToString tests
 
         [TestCase("G", ExpectedResult = "John Doe, +1 (425) 555-0100, 1000.52")]
+
         [TestCase("NPR", ExpectedResult = "John Doe, +1 (425) 555-0100, 1000.52")]
+        [TestCase("npr", ExpectedResult = "John Doe, +1 (425) 555-0100, 1000.52")]
         [TestCase("NP", ExpectedResult = "John Doe, +1 (425) 555-0100")]
-        [TestCase("NR", ExpectedResult = "John Doe, 1000.52")]
+        [TestCase("nR", ExpectedResult = "John Doe, 1000.52")]
         [TestCase("RN", ExpectedResult = "1000.52, John Doe")]
         [TestCase("PN", ExpectedResult = "+1 (425) 555-0100, John Doe")]
-        [TestCase("PR", ExpectedResult = "+1 (425) 555-0100, 1000.52")]
+        [TestCase("Pr", ExpectedResult = "+1 (425) 555-0100, 1000.52")]
         [TestCase("RP", ExpectedResult = "1000.52, +1 (425) 555-0100")]
         public string CustomersToString_ValidInputInvariantCulture_ValidString(string format)
         {
@@ -29,7 +31,7 @@
 
         [TestCase("G", ExpectedResult = "John Doe, +1 (425) 555-0100, 1000,52")]
         [TestCase("NPR", ExpectedResult = "John Doe, +1 (425) 555-0100, 1000,52")]
-        [TestCase("RN", ExpectedResult = "1000,52, John Doe")]
+        [TestCase("rn", ExpectedResult = "1000,52, John Doe")]
         public string CustomersToString_ValidInputRussianCulture_ValidString(string format)
         {
             var c = new Customer("John Doe", "+1 (425) 555-0100", 1000.52m);

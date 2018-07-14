@@ -12,8 +12,8 @@
     public class ShortNameFormatProviderTests
     {
         [TestCase("John Doe", "SP", ExpectedResult = "J. Doe, +1 (425) 555-0100")]
-        [TestCase("John Doe", "SPR", ExpectedResult = "J. Doe, +1 (425) 555-0100, 1000.52")]
-        [TestCase("John Doe", "RS", ExpectedResult = "1000.52, J. Doe")]
+        [TestCase("John Doe", "sPR", ExpectedResult = "J. Doe, +1 (425) 555-0100, 1000.52")]
+        [TestCase("John Doe", "rs", ExpectedResult = "1000.52, J. Doe")]
         [TestCase("John Clark Robin Doe", "S", ExpectedResult = "J. C. R. Doe")]
         [TestCase("Кирилл Александрович Севкович", "S", ExpectedResult = "К. А. Севкович")]
         public string CustomersToString_ValidInputInvariantCulture_ValidString(string name, string format)
