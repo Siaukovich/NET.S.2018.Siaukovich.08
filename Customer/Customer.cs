@@ -73,7 +73,7 @@
 
             set
             {
-                if (value == null)
+                if (string.IsNullOrEmpty(value))
                 {
                     throw new ArgumentNullException(nameof(value));
                 }
@@ -114,7 +114,7 @@
 
             set
             {
-                if (value == null)
+                if (string.IsNullOrEmpty(value))
                 {
                     throw new ArgumentNullException(nameof(value));
                 }
